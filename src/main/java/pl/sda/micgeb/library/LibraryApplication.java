@@ -19,5 +19,10 @@ public class LibraryApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         bookService.showBooks();
+        System.out.println("================");
+        bookService.findByISBN("2").ifPresentOrElse(
+                book -> System.out.println("Book found: " + book),
+                () -> System.out.println("Book not found for ISBN")
+        );
     }
 }

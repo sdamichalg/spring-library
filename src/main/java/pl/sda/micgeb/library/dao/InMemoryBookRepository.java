@@ -1,13 +1,12 @@
 package pl.sda.micgeb.library.dao;
 
+import org.springframework.stereotype.Repository;
 import pl.sda.micgeb.library.model.Author;
 import pl.sda.micgeb.library.model.Book;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+@Repository
 public class InMemoryBookRepository implements BookRepository{
 
     private static final Map<Integer, Book> booksMap;
@@ -37,5 +36,13 @@ public class InMemoryBookRepository implements BookRepository{
     @Override
     public List<Book> getAllBooks() {
         return new ArrayList<>(booksMap.values());
+    }
+
+    @Override
+    public Optional<Book> findBookByIsbn(String isbn) {
+        return booksMap.values()
+                .stream()
+                .filter(book -> book.getIsbn().equals(isbn))
+                .findFirst();
     }
 }
